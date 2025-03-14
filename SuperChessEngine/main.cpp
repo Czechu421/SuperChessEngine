@@ -7,6 +7,8 @@ using namespace chess;
 int main() {
     std::string line;
 
+    Board board;
+
     while (std::getline(std::cin, line)) {
         auto words = explode(line);
 
@@ -25,14 +27,13 @@ int main() {
         else if (words[0] == "position") {
             if (words[1] == "fen") {
                 std::string fen = words[2];
-                std::cout << "FEN: " << fen << std::endl;
+                board.setFen(fen);
             }
             else if (words[1] == "startpos") {
-                std::cout << "moves: " << std::endl;
+                board.setFen(STARTPOS);
                 for (int i = 2; i < words.size(); i++) {
-                    std::cout << words[i] << " ";
+                    // todo: implement moving pieces after STARTPOS
                 }
-                std::cout << std::endl;
             }
         }
     }
