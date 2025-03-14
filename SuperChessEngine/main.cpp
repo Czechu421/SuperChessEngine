@@ -30,7 +30,7 @@ int main() {
                 board.setFen(fen);
             }
             else if (words[1] == "startpos") {
-                board.setFen(STARTPOS);
+                board.setFen(chess::constants::STARTPOS);
                 for (int i = 2; i < words.size(); i++) {
                     // todo: implement moving pieces after STARTPOS
                 }
