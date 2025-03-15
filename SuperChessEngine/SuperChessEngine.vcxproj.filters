@@ -21,6 +21,9 @@
     <ClCompile Include="evaluation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="negaMax.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chess.hpp">

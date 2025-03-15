@@ -1,6 +1,9 @@
 #include "chess.hpp"
 
 #include "usefullFunctions.cpp"
+#include "negaMax.cpp"
+
+#define INF std::numeric_limits<std::int16_t>::max()
 
 using namespace chess;
 
@@ -10,6 +13,8 @@ int main() {
     Board board;
 
     while (std::getline(std::cin, line)) {
+        if (line.empty())
+            continue;
         auto words = explode(line);
 
         if (words[0] == "uci") {
@@ -31,10 +36,31 @@ int main() {
             }
             else if (words[1] == "startpos") {
                 board.setFen(chess::constants::STARTPOS);
-                for (int i = 2; i < words.size(); i++) {
-                    // todo: implement moving pieces after STARTPOS
-                }
+                    for (int i = 3; i < words.size(); i++) {
+                        board.makeMove(uci::uciToMove(board, words[i]));
+                    }
             }
+        }
+        else if (words[0] == "go") {
+            std::int8_t depth = 5;
+
+            Movelist moves;
+            movegen::legalmoves(moves, board);
+
+            Move bestMove;
+            std::int16_t bestScore = -INF;
+
+            for (auto& move : moves) {
+                board.makeMove(move);
+                move.setScore(negaMax(board, depth));
+                if (bestScore < move.score()) {
+                    bestMove = move;
+                    bestScore = move.score();
+                }
+                board.unmakeMove(move);
+            }
+
+            std::cout << "bestmove " << uci::moveToUci(bestMove) << std::endl;
         }
     }
 
