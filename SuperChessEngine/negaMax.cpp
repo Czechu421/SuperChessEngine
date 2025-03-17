@@ -1,4 +1,5 @@
 #include "chess.hpp"
+#include <fstream>
 
 #include "evaluation.cpp"
 
@@ -7,7 +8,7 @@
 
 using namespace chess;
 
-static INT negaMax(Board& board, INT depth) {
+static INT negaMax(Board& board, INT depth, bool debug) {
 	// Checking if game is ended by fifty move rule
 	if (board.isHalfMoveDraw())
 		return board.getHalfMoveDrawType().first == GameResultReason::CHECKMATE ?
@@ -20,6 +21,13 @@ static INT negaMax(Board& board, INT depth) {
 
 	// From now on starting to calculate best move to play
 	if (depth == 0) { // if reached max depth evaluate position
+		if (debug) {
+			std::ofstream log("log.txt", std::ios::app);
+			for(int i = 0; i < depth; i++)
+				log << "\t";
+			log << "Evaluating position " << evaluate(board) << std::endl;
+			log.close();
+		}
 		return evaluate(board);
 	}
 
@@ -28,8 +36,15 @@ static INT negaMax(Board& board, INT depth) {
 	INT max = -INF;
 
 	for (const auto& move : moves) {
+		if (debug) {
+			std::ofstream log("log.txt", std::ios::app);
+			for(int i = 0; i < depth; i++)
+				log << "\t";
+			log << "Trying move: " << uci::moveToUci(move) << std::endl;
+			log.close();
+		}
 		board.makeMove(move);
-		INT score = -negaMax(board, depth - 1);
+		INT score = -negaMax(board, depth - 1, debug);
 		board.unmakeMove(move);
 
 		if (score > max)

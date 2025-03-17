@@ -435,3 +435,10 @@ FodyWeavers.xsd
 #lichessBot
 .lichessBot/*
 .lichessBot/
+
+#Visualstudiocode
+.vscode/
+
+#compiled project
+*/main
+*/log.txt
