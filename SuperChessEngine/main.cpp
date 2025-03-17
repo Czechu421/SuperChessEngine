@@ -9,7 +9,7 @@
 using namespace chess;
 
 int main() {
-    bool debug = false;
+    bool debug = true;
 
     std::string line;
 
@@ -58,7 +58,6 @@ int main() {
                     fen += " " + words[i];
                 }
                 if (debug) {
-                    std::cout << "Fen: " << fen << std::endl;
                     std::ofstream log("log.txt", std::ios::app);
                     log << "Fen: " << fen << std::endl;
                     log.close();
@@ -74,7 +73,7 @@ int main() {
             continue;
         }
         else if (words[0] == "go") {
-            std::int8_t depth = 4;
+            std::int8_t depth = 5;
 
             Movelist moves;
             movegen::legalmoves(moves, board);
@@ -84,13 +83,10 @@ int main() {
 
             if (debug) {
                 std::ofstream log("log.txt", std::ios::app);
-                std::cout << "Legal moves: " << moves.size() << std::endl;
                 log << "Legal moves: " << moves.size() << std::endl;
                 for (auto& move : moves) {
-                    std::cout << uci::moveToUci(move) << " ";
                     log << uci::moveToUci(move) << " ";
                 }
-                std::cout << std::endl;
                 log << std::endl;
                 log.close();
             }
@@ -99,10 +95,8 @@ int main() {
                 if (debug) {
                     std::ofstream log("log.txt", std::ios::app);
                     for(int i = 0; i < depth; i++) {
-                        std::cout << "\t";
                         log << "\t";
                     }
-                    std::cout << "Trying move: " << uci::moveToUci(move) << std::endl;
                     log << "Trying move: " << uci::moveToUci(move) << std::endl;
                     log.close();
                 }
@@ -120,10 +114,8 @@ int main() {
             if (debug) {
                 std::ofstream log("log.txt", std::ios::app);
                 for (auto& move : moves) {
-                    std::cout << std::endl << uci::moveToUci(move) << " " << move.score();
                     log << std::endl << uci::moveToUci(move) << " " << move.score();
                 }
-                std::cout << std::endl;
                 log << std::endl;
                 log.close();
             }

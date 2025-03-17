@@ -21,13 +21,6 @@ static INT negaMax(Board& board, INT depth, bool debug) {
 
 	// From now on starting to calculate best move to play
 	if (depth == 0) { // if reached max depth evaluate position
-		if (debug) {
-			std::ofstream log("log.txt", std::ios::app);
-			for(int i = 0; i < depth; i++)
-				log << "\t";
-			log << "Evaluating position " << evaluate(board) << std::endl;
-			log.close();
-		}
 		return evaluate(board);
 	}
 
@@ -36,13 +29,6 @@ static INT negaMax(Board& board, INT depth, bool debug) {
 	INT max = -INF;
 
 	for (const auto& move : moves) {
-		if (debug) {
-			std::ofstream log("log.txt", std::ios::app);
-			for(int i = 0; i < depth; i++)
-				log << "\t";
-			log << "Trying move: " << uci::moveToUci(move) << std::endl;
-			log.close();
-		}
 		board.makeMove(move);
 		INT score = -negaMax(board, depth - 1, debug);
 		board.unmakeMove(move);
