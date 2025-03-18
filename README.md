@@ -30,4 +30,4 @@ Tested and built in Visual Studio. C++ version is 17. Follow these steps to clon
 Based on [chess-library](https://github.com/Disservin/chess-library)
 
 ### License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details.
