@@ -22,6 +22,7 @@
     <ClCompile Include="evaluation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="negaMax.cpp" />
+    <ClCompile Include="usefullFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chess.hpp" />

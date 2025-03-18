@@ -52,8 +52,8 @@ int main() {
             continue;
         }
         else if (words[0] == "position") {
-            std::string fen = words[2];
             if (words[1] == "fen") {
+                std::string fen = words[2];
                 for (int i = 3; i <= 7; i++) {
                     fen += " " + words[i];
                 }
@@ -73,7 +73,11 @@ int main() {
             continue;
         }
         else if (words[0] == "go") {
-            std::int8_t depth = 5;
+            std::int8_t depth = 6;
+
+			if (words[1] == "movetime" && words[2] == "10000") {
+				depth = 4;
+			}
 
             Movelist moves;
             movegen::legalmoves(moves, board);
