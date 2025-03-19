@@ -11,7 +11,7 @@
 using namespace chess;
 
 int main() {
-    bool debug = true;
+    bool debug = false;
 	std::uint8_t threads = 2;
 	std::uint16_t depth = 6;
 
@@ -29,6 +29,7 @@ int main() {
             std::cout << "id author Czechu" << std::endl;
 			std::cout << "option name Threads type spin default " << (int) threads << " min 1 max 255" << std::endl;
             std::cout << "option name Depth type spin default " << (int) depth << " min 1 max 255" << std::endl;
+			std::cout << "option name Debug type check default false" << std::endl;
             std::cout << "uciok" << std::endl;
             continue;
         }
@@ -36,24 +37,13 @@ int main() {
 			if (words[1] == "name" && words[2] == "Threads") {
 				threads = std::stoi(words[4]);
 			}
+			else if (words[1] == "name" && words[2] == "Depth") {
+				depth = std::stoi(words[4]);
+			}
+			else if (words[1] == "name" && words[2] == "Debug") {
+				debug = words[4] == "true";
+			}
 			continue;
-        }
-        if (words[0] == "debug") {
-            if (debug) {
-                debug = false;
-                std::cout << "Debugging off !!!" << std::endl;
-                std::ofstream log("log.txt", std::ios::app);
-                log << std::endl << "<--- END DEBUG LOG --->" << std::endl;
-                log.close();
-            }
-            else {
-                debug = true;
-                std::cout << "Debugging on !!!" << std::endl;
-                std::ofstream log("log.txt", std::ios::app);
-                log << std::endl << "<--- NEW DEBUG LOG --->" << std::endl;
-                log.close();
-            }
-            continue;
         }
         else if (words[0] == "quit") {
             std::cout << "Quiting!" << std::endl;
