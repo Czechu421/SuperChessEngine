@@ -75,9 +75,9 @@ int main() {
         else if (words[0] == "go") {
             std::int8_t depth = 6;
 
-			if (words[1] == "movetime" && words[2] == "10000") {
-				depth = 4;
-			}
+            if (words.size() > 1)
+                if (words[1] == "movetime" && words[2] == "10000")
+                    depth = 4;
 
             Movelist moves;
             movegen::legalmoves(moves, board);
