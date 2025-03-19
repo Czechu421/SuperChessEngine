@@ -13,7 +13,7 @@ using namespace chess;
 int main() {
     bool debug = false;
 	std::uint8_t threads = 2;
-	std::uint16_t depth = 6;
+	std::int8_t depth = 6;
 
     std::string line;
 
@@ -36,12 +36,15 @@ int main() {
         else if (words[0] == "setoption") {
 			if (words[1] == "name" && words[2] == "Threads") {
 				threads = std::stoi(words[4]);
+				std::cout << "info string Threads set to " << (int)threads << std::endl;
 			}
 			else if (words[1] == "name" && words[2] == "Depth") {
 				depth = std::stoi(words[4]);
+				std::cout << "info string Depth set to " << (int)depth << std::endl;
 			}
 			else if (words[1] == "name" && words[2] == "Debug") {
 				debug = words[4] == "true";
+				std::cout << "info string Debug set to " << (debug ? "true" : "false") << std::endl;
 			}
 			continue;
         }
@@ -75,11 +78,13 @@ int main() {
             continue;
         }
         else if (words[0] == "go") {
+			std::int8_t depthCopy = depth;
 
             if (words.size() > 1)
-                if (words[1] == "movetime" && words[2] == "10000")
-                    depth = 4;
-
+                if (words[1] == "movetime" && words[2] == "10000") {
+                    depthCopy = 4;
+                    std::cout << "info string Depth set to " << (int)depthCopy << std::endl;
+                }
             Movelist moves;
             movegen::legalmoves(moves, board);
 
@@ -107,7 +112,7 @@ int main() {
             }
 
             for (std::uint8_t i = 0; i < threads; ++i) {
-                threadPool.emplace_back(search, std::cref(board), std::ref(moveChunks[i]), depth, debug);
+                threadPool.emplace_back(search, std::cref(board), std::ref(moveChunks[i]), depthCopy, debug);
             }
 
             for (auto& thread : threadPool) {
