@@ -13,6 +13,7 @@ using namespace chess;
 int main() {
     bool debug = true;
 	std::uint8_t threads = 2;
+	std::uint16_t depth = 6;
 
     std::string line;
 
@@ -27,6 +28,7 @@ int main() {
             std::cout << "id name SuperChessEngine" << std::endl;
             std::cout << "id author Czechu" << std::endl;
 			std::cout << "option name Threads type spin default " << (int) threads << " min 1 max 255" << std::endl;
+            std::cout << "option name Depth type spin default " << (int) depth << " min 1 max 255" << std::endl;
             std::cout << "uciok" << std::endl;
             continue;
         }
@@ -83,7 +85,6 @@ int main() {
             continue;
         }
         else if (words[0] == "go") {
-            std::int8_t depth = 6;
 
             if (words.size() > 1)
                 if (words[1] == "movetime" && words[2] == "10000")
