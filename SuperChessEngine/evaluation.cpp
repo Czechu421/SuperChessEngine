@@ -138,38 +138,48 @@ else {
 while (whiteQueens.empty() == false) {
 	Square queenSquare(whiteQueens.pop());
 	score += queenWeight + queenSquareBonus[queenSquare.flip().index()];
-
-	queenSquare = Square(blackQueens.pop());
-	score += queenWeight + queenSquareBonus[queenSquare.flip().index()];
 }
+while (blackQueens.empty() == false) {
+	Square queenSquare(blackQueens.pop());
+	score -= queenWeight + queenSquareBonus[queenSquare.flip().index()];
+}
+
 while (whiteRooks.empty() == false) {
 	Square rookSquare(whiteRooks.pop());
 	score += rookWeight + rookSquareBonus[rookSquare.flip().index()];
-
-	rookSquare = Square(blackRooks.pop());
-	score += rookWeight + rookSquareBonus[rookSquare.flip().index()];
 }
+while (blackRooks.empty() == false) {
+	Square rookSquare(blackRooks.pop());
+	score -= rookWeight + rookSquareBonus[rookSquare.flip().index()];
+}
+
 while (whiteBishops.empty() == false) {
 	Square bishopSquare(whiteBishops.pop());
 	score += bishopWeight + bishopSquareBonus[bishopSquare.flip().index()];
-
-	bishopSquare = Square(blackBishops.pop());
-	score += bishopWeight + bishopSquareBonus[bishopSquare.flip().index()];
 }
+while (blackBishops.empty() == false) {
+	Square bishopSquare(blackBishops.pop());
+	score -= bishopWeight + bishopSquareBonus[bishopSquare.flip().index()];
+}
+
 while (whiteKnights.empty() == false) {
 	Square knightSquare(whiteKnights.pop());
 	score += knightWeight + knightSquareBonus[knightSquare.flip().index()];
-
-	knightSquare = Square(blackKnights.pop());
-	score += knightWeight + knightSquareBonus[knightSquare.flip().index()];
 }
+while (blackKnights.empty() == false) {
+	Square knightSquare(blackKnights.pop());
+	score -= knightWeight + knightSquareBonus[knightSquare.flip().index()];
+}
+
 while (whitePawns.empty() == false) {
 	Square pawnSquare(whitePawns.pop());
 	score += pawnWeight + pawnSquareBonus[pawnSquare.flip().index()];
-
-	pawnSquare = Square(blackPawns.pop());
-	score += pawnWeight + pawnSquareBonus[pawnSquare.flip().index()];
 }
+while (blackPawns.empty() == false) {
+	Square pawnSquare(blackPawns.pop());
+	score -= pawnWeight + pawnSquareBonus[pawnSquare.flip().index()];
+}
+
 
 if (board.sideToMove()) {
 	score *= -1;
