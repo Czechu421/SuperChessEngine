@@ -27,9 +27,15 @@
     <ClCompile Include="usefullFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="search.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chess.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="search.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
