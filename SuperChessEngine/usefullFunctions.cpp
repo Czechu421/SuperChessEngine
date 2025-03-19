@@ -1,4 +1,8 @@
-std::vector<std::string> explode(std::string str, char delim = ' ') {
+#include <vector>
+#include <string>
+#include <sstream>
+
+static std::vector<std::string> explode(std::string str, char delim = ' ') {
     std::vector<std::string> result;
     std::stringstream stream(str);
     std::string buffer = "";

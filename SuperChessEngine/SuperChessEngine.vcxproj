@@ -22,9 +22,12 @@
     <ClCompile Include="evaluation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="negaMax.cpp" />
+    <ClCompile Include="search.cpp" />
+    <ClCompile Include="usefullFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chess.hpp" />
+    <ClInclude Include="search.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

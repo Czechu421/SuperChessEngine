@@ -1,8 +1,10 @@
 #include "chess.hpp"
 #include <fstream>
+#include <thread>
+#include <vector>
 
 #include "usefullFunctions.cpp"
-#include "negaMax.cpp"
+#include "search.hpp"
 
 #define INF std::numeric_limits<std::int16_t>::max()
 
@@ -10,6 +12,7 @@ using namespace chess;
 
 int main() {
     bool debug = true;
+	std::uint8_t threads = 2;
 
     std::string line;
 
@@ -23,8 +26,15 @@ int main() {
         if (words[0] == "uci") {
             std::cout << "id name SuperChessEngine" << std::endl;
             std::cout << "id author Czechu" << std::endl;
+			std::cout << "option name Threads type spin default " << (int) threads << " min 1 max 255" << std::endl;
             std::cout << "uciok" << std::endl;
             continue;
+        }
+        else if (words[0] == "setoption") {
+			if (words[1] == "name" && words[2] == "Threads") {
+				threads = std::stoi(words[4]);
+			}
+			continue;
         }
         if (words[0] == "debug") {
             if (debug) {
@@ -52,8 +62,8 @@ int main() {
             continue;
         }
         else if (words[0] == "position") {
-            std::string fen = words[2];
             if (words[1] == "fen") {
+                std::string fen = words[2];
                 for (int i = 3; i <= 7; i++) {
                     fen += " " + words[i];
                 }
@@ -73,7 +83,11 @@ int main() {
             continue;
         }
         else if (words[0] == "go") {
-            std::int8_t depth = 5;
+            std::int8_t depth = 6;
+
+            if (words.size() > 1)
+                if (words[1] == "movetime" && words[2] == "10000")
+                    depth = 4;
 
             Movelist moves;
             movegen::legalmoves(moves, board);
@@ -91,33 +105,44 @@ int main() {
                 log.close();
             }
 
-            for (auto& move : moves) {
-                if (debug) {
-                    std::ofstream log("log.txt", std::ios::app);
-                    for(int i = 0; i < depth; i++) {
-                        log << "\t";
-                    }
-                    log << "Trying move: " << uci::moveToUci(move) << std::endl;
-                    log.close();
-                }
-                board.makeMove(move);
-                move.setScore(-negaMax(board, depth, debug));
-                if (bestScore < move.score()) {
-                    bestMove = move;
-                    bestScore = move.score();
-                }
-                board.unmakeMove(move);
+            
+			// MULTITHREADING
+
+            std::vector<std::thread> threadPool;
+            std::vector<Movelist> moveChunks(threads);
+
+            for (size_t i = 0; i < moves.size(); ++i) {
+                moveChunks[i % threads].add(moves[i]);
             }
+
+            for (std::uint8_t i = 0; i < threads; ++i) {
+                threadPool.emplace_back(search, std::cref(board), std::ref(moveChunks[i]), depth, debug);
+            }
+
+            for (auto& thread : threadPool) {
+                thread.join();
+            }
+
+			for (auto& moveChunk : moveChunks) {
+				for (auto& move : moveChunk) {
+					if (move.score() > bestScore) {
+						bestScore = move.score();
+						bestMove = move;
+					}
+				}
+			}
 
             std::cout << "bestmove " << uci::moveToUci(bestMove) << std::endl;
 
             if (debug) {
                 std::ofstream log("log.txt", std::ios::app);
-                for (auto& move : moves) {
-                    log << std::endl << uci::moveToUci(move) << " " << move.score();
+                for (auto& moveChunk : moveChunks) {
+                    for (auto& move : moveChunk) {
+                        log << std::endl << uci::moveToUci(move) << " " << move.score();
+                    }
+                    log << std::endl;
+                    log.close();
                 }
-                log << std::endl;
-                log.close();
             }
             continue;
         }
