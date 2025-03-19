@@ -113,61 +113,61 @@ bool isEndgame = whiteMinorPieces.count() <= 1 && blackMinorPieces.count() <= 1 
 
 if (isEndgame) {
 	if (whiteKing.empty() == false) {
-		Square kingSquare = Square::Square(whiteKing.pop());
+		Square kingSquare(whiteKing.pop());
 		score += kingWeight + kingSquareBonusEND[kingSquare.flip().index()];
 	}
 
 	if (blackKing.empty() == false) {
-		Square kingSquare = Square::Square(blackKing.pop());
+		Square kingSquare(blackKing.pop());
 		score -= kingWeight + kingSquareBonusEND[kingSquare.flip().index()];
 	}
 }
 else {
 	if (whiteKing.empty() == false) {
-		Square kingSquare = Square::Square(whiteKing.pop());
+		Square kingSquare(whiteKing.pop());
 		score += kingWeight + kingSquareBonusMIDDLE[kingSquare.flip().index()];
 	}
 
 	if (blackKing.empty() == false) {
-		Square kingSquare = Square::Square(blackKing.pop());
+		Square kingSquare(blackKing.pop());
 		score -= kingWeight + kingSquareBonusMIDDLE[kingSquare.flip().index()];
 	}
 }
 
 
 while (whiteQueens.empty() == false) {
-	Square queenSquare = Square::Square(whiteQueens.pop());
+	Square queenSquare(whiteQueens.pop());
 	score += queenWeight + queenSquareBonus[queenSquare.flip().index()];
 
-	queenSquare = Square::Square(blackQueens.pop());
+	queenSquare = Square(blackQueens.pop());
 	score += queenWeight + queenSquareBonus[queenSquare.flip().index()];
 }
 while (whiteRooks.empty() == false) {
-	Square rookSquare = Square::Square(whiteRooks.pop());
+	Square rookSquare(whiteRooks.pop());
 	score += rookWeight + rookSquareBonus[rookSquare.flip().index()];
 
-	rookSquare = Square::Square(blackRooks.pop());
+	rookSquare = Square(blackRooks.pop());
 	score += rookWeight + rookSquareBonus[rookSquare.flip().index()];
 }
 while (whiteBishops.empty() == false) {
-	Square bishopSquare = Square::Square(whiteBishops.pop());
+	Square bishopSquare(whiteBishops.pop());
 	score += bishopWeight + bishopSquareBonus[bishopSquare.flip().index()];
 
-	bishopSquare = Square::Square(blackBishops.pop());
+	bishopSquare = Square(blackBishops.pop());
 	score += bishopWeight + bishopSquareBonus[bishopSquare.flip().index()];
 }
 while (whiteKnights.empty() == false) {
-	Square knightSquare = Square::Square(whiteKnights.pop());
+	Square knightSquare(whiteKnights.pop());
 	score += knightWeight + knightSquareBonus[knightSquare.flip().index()];
 
-	knightSquare = Square::Square(blackKnights.pop());
+	knightSquare = Square(blackKnights.pop());
 	score += knightWeight + knightSquareBonus[knightSquare.flip().index()];
 }
 while (whitePawns.empty() == false) {
-	Square pawnSquare = Square::Square(whitePawns.pop());
+	Square pawnSquare(whitePawns.pop());
 	score += pawnWeight + pawnSquareBonus[pawnSquare.flip().index()];
 
-	pawnSquare = Square::Square(blackPawns.pop());
+	pawnSquare = Square(blackPawns.pop());
 	score += pawnWeight + pawnSquareBonus[pawnSquare.flip().index()];
 }
 
