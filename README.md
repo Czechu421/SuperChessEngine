@@ -3,8 +3,9 @@
 ### Features
 * Uses UCI commands to communicate.
   * Tested with [LichessBot](https://github.com/lichess-bot-devs/lichess-bot).
-* Uses negamax algorithm at fixed 5 moves depth.
-* Evaluates position only based on material.
+* Supports multithreading.
+* Uses negamax algorithm at depth specified in uci command.
+* Evaluates position based on material and position of each piece.
 
 ### Prerequisites
 - Visual Studio 2019 or later
