@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "usefullFunctions.cpp"
-#include "search.hpp"
+#include "search.cpp"
 
 #define INF std::numeric_limits<std::int16_t>::max()
 
